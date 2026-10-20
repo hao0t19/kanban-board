@@ -11,7 +11,8 @@ A local-first Kanban board with drag and drop, undo/redo, search and filters, an
 - Drag and drop to reorder within a column or move across columns, with mouse, touch or keyboard
 - Undo / redo for every change (`Ctrl+Z` / `Ctrl+Shift+Z`), plus an Undo action in the toast after a delete
 - Debounced search and priority / tag filters
-- Persists to `localStorage`; opens with sample data, and "Load sample data" restores it
+- Persists to `localStorage`; first visit opens an example board with usage tips
+- "Clear board" (with confirmation and undo) to start fresh; an empty board offers to load the example again
 - Dark mode that follows the system, with a manual toggle
 - Responsive: on phones the columns scroll horizontally with snap
 
