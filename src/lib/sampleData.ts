@@ -1,22 +1,54 @@
 import type { BoardState, Card } from "@/types/board";
 
-const createdAt = "2026-10-20T09:00:00.000Z";
+/** Local YYYY-MM-DD for today + n days, so sample due dates never go stale. */
+function inDays(days: number): string {
+  const date = new Date();
+  date.setDate(date.getDate() + days);
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+}
 
-const cards: Card[] = [
-  { id: "c1", title: "Fix login redirect bug", priority: "high", dueDate: "2026-10-21", tags: ["bug", "auth"], createdAt },
-  { id: "c2", title: "Write README with GIF demo", priority: "medium", dueDate: "2026-10-24", tags: ["docs"], createdAt },
-  { id: "c3", title: "Add keyboard shortcuts help", priority: "low", tags: [], createdAt },
-  { id: "c4", title: "Build drag and drop with dnd-kit", priority: "high", dueDate: "2026-10-22", tags: ["frontend", "a11y"], createdAt },
-  { id: "c5", title: "Undo / redo history stack", priority: "medium", tags: ["state"], createdAt },
-  { id: "c6", title: "Add search and filters", priority: "medium", tags: ["frontend"], createdAt },
-  { id: "c7", title: "Set up Next.js + Tailwind", priority: "low", tags: ["setup"], createdAt },
-  { id: "c8", title: "Deploy empty shell to Vercel", priority: "low", tags: ["deploy"], createdAt },
-  { id: "c9", title: "Define normalized data types", priority: "medium", tags: ["state"], createdAt },
-];
+function sampleCards(): Card[] {
+  const createdAt = new Date().toISOString();
+  return [
+    {
+      id: "c1",
+      title: "Drag me to In Progress",
+      description:
+        "Grab a card and drop it in another column, or reorder it within a column. With a keyboard: Tab to a card, press Space, move with the arrow keys, then press Space again.",
+      priority: "medium",
+      tags: ["tip"],
+      createdAt,
+    },
+    { id: "c2", title: "Pay electricity bill", priority: "high", dueDate: inDays(2), tags: ["home"], createdAt },
+    { id: "c3", title: "Plan weekend trip", priority: "low", dueDate: inDays(5), tags: ["personal"], createdAt },
+    { id: "c4", title: "Prepare weekly report", priority: "high", dueDate: inDays(1), tags: ["work"], createdAt },
+    {
+      id: "c5",
+      title: "Click a card to edit it",
+      description: "Change the title, description, priority, due date and tags. You can delete the card from here too.",
+      priority: "medium",
+      tags: ["tip"],
+      createdAt,
+    },
+    {
+      id: "c6",
+      title: "Search, filter and undo",
+      description:
+        "Use the search box or the Priority and Tag filters at the top. Made a mistake? Press Ctrl+Z to undo and Ctrl+Shift+Z to redo.",
+      priority: "low",
+      tags: ["tip"],
+      createdAt,
+    },
+    { id: "c7", title: "Buy groceries", priority: "medium", tags: ["home"], createdAt },
+    { id: "c8", title: "Book dentist appointment", priority: "low", tags: ["personal"], createdAt },
+    { id: "c9", title: "Reply to team emails", priority: "medium", tags: ["work"], createdAt },
+  ];
+}
 
 export function createSampleBoard(): BoardState {
   return {
-    cards: Object.fromEntries(cards.map((card) => [card.id, { ...card, tags: [...card.tags] }])),
+    cards: Object.fromEntries(sampleCards().map((card) => [card.id, card])),
     columns: {
       todo: { id: "todo", title: "To Do", cardIds: ["c1", "c2", "c3"] },
       doing: { id: "doing", title: "In Progress", cardIds: ["c4", "c5", "c6"] },
