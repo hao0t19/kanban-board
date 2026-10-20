@@ -58,3 +58,15 @@
     @apply outline-none ring-2 ring-accent ring-offset-2 ring-offset-page;
   }
 }
+
+/* Theme switch: ThemeToggle animates a circular reveal instead of the default cross-fade. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+.theme-switching,
+.theme-switching * {
+  transition: none !important;
+}
