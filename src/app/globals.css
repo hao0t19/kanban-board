@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Design tokens from design.md, as RGB channels for Tailwind alpha support. */
+@layer base {
+  :root {
+    color-scheme: light;
+    --color-page: 246 245 241; /* #F6F5F1 */
+    --color-column: 237 235 228; /* #EDEBE4 */
+    --color-surface: 255 255 255; /* #FFFFFF */
+    --color-ink: 27 27 26; /* #1B1B1A */
+    --color-ink-muted: 94 92 85; /* #5E5C55 */
+    --color-line: 228 226 219; /* #E4E2DB */
+    --color-accent: 61 90 254; /* #3D5AFE */
+    --color-accent-soft: 236 238 255; /* #ECEEFF */
+    --color-accent-contrast: 255 255 255;
+    --color-accent-on-ink: 140 156 255;
+    --color-high: 155 28 18; /* #9B1C12 */
+    --color-high-bg: 253 236 234; /* #FDECEA */
+    --color-medium: 122 78 0; /* #7A4E00 */
+    --color-medium-bg: 255 241 204; /* #FFF1CC */
+    --color-low: 26 98 53; /* #1A6235 */
+    --color-low-bg: 225 243 231; /* #E1F3E7 */
+    --color-tag: 43 63 184; /* #2B3FB8 */
+    --color-tag-bg: 236 238 255; /* #ECEEFF */
+    --color-shadow: 27 27 26;
+  }
+
+  .dark {
+    color-scheme: dark;
+    --color-page: 20 20 19;
+    --color-column: 31 31 29;
+    --color-surface: 42 42 39;
+    --color-ink: 237 236 232;
+    --color-ink-muted: 163 161 153;
+    --color-line: 58 57 53;
+    --color-accent: 108 130 255;
+    --color-accent-soft: 36 41 74;
+    --color-accent-contrast: 255 255 255;
+    --color-accent-on-ink: 61 90 254;
+    --color-high: 244 167 159;
+    --color-high-bg: 61 31 28;
+    --color-medium: 242 199 107;
+    --color-medium-bg: 58 46 18;
+    --color-low: 143 212 166;
+    --color-low-bg: 28 51 36;
+    --color-tag: 174 184 255;
+    --color-tag-bg: 38 43 77;
+    --color-shadow: 0 0 0;
+  }
+
+  body {
+    @apply bg-page font-sans text-ink antialiased;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-accent ring-offset-2 ring-offset-page;
+  }
+}
