@@ -83,15 +83,21 @@ export function Board() {
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
   );
 
+  // A tag filter for a tag no card has any more (e.g. after deleting or clearing) is ignored.
+  const activeTag = useMemo(
+    () => (tag !== "all" && Object.values(cards).some((card) => card.tags.includes(tag)) ? tag : "all"),
+    [cards, tag],
+  );
+
   const matches = useCallback(
     (card: Card) => {
       if (priority !== "all" && card.priority !== priority) return false;
-      if (tag !== "all" && !card.tags.includes(tag)) return false;
+      if (activeTag !== "all" && !card.tags.includes(activeTag)) return false;
       const q = query.trim().toLowerCase();
       if (!q) return true;
       return [card.title, card.description ?? "", ...card.tags].join(" ").toLowerCase().includes(q);
     },
-    [query, priority, tag],
+    [query, priority, activeTag],
   );
 
   const visibleCards = useMemo(() => {
