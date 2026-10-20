@@ -1,9 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import { useMemo, useState } from "react";
 import { Button, IconButton } from "@/components/ui/Button";
 import { priorityLabel } from "@/components/ui/Chip";
-import { CloseIcon, LogoIcon, MenuIcon } from "@/components/ui/Icons";
+import { CloseIcon, MenuIcon } from "@/components/ui/Icons";
+import logoMark from "../../../logo/logo-mark.svg";
 import { cn } from "@/lib/utils";
 import { useBoardStore } from "@/store/useBoardStore";
 import { useUiStore, type PriorityFilter } from "@/store/useUiStore";
@@ -45,9 +47,7 @@ export function Header() {
     <header className="sticky left-0 top-0 z-20 border-b border-line bg-surface">
       <div className="flex flex-wrap items-center gap-3 px-4 py-3 md:px-8 md:py-4">
         <div className="mr-1 flex items-center gap-2.5">
-          <span className="flex h-7 w-7 items-center justify-center rounded-md bg-accent text-accent-contrast">
-            <LogoIcon width={16} height={16} />
-          </span>
+          <Image src={logoMark} alt="" width={28} height={28} priority className="rounded-md dark:ring-1 dark:ring-line" />
           <h1 className="text-xl font-semibold tracking-tight">Kanban</h1>
         </div>
 

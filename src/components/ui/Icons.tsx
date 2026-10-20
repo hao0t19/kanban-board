@@ -51,9 +51,3 @@ export const MenuIcon = (props: IconProps) => (
     <path d="M4 6h16M4 12h16M4 18h16" />
   </svg>
 );
-
-export const LogoIcon = (props: IconProps) => (
-  <svg {...base} strokeWidth={2.4} {...props}>
-    <path d="M8 7v10M12 7v6M16 7v8" />
-  </svg>
-);

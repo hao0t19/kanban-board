@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none" role="img" aria-label="Kanban logo">
+  <rect width="512" height="512" rx="112" fill="#1B1B1A"/>
+  <rect x="112" y="168" width="72" height="184" rx="36" fill="#3D5AFE"/>
+  <rect x="208" y="72" width="80" height="368" rx="40" fill="#3D5AFE"/>
+  <rect x="328" y="248" width="72" height="192" rx="36" fill="#3D5AFE"/>
+  <rect x="276" y="156" width="128" height="72" rx="22" fill="#A8B4FF"/>
+</svg>
