@@ -47,13 +47,14 @@ export function ThemeToggle() {
       }
     };
 
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (typeof document.startViewTransition !== "function" || reduceMotion) {
+    if (typeof document.startViewTransition !== "function") {
       apply();
       return;
     }
 
-    // Reveal the new theme as a circle growing from the toggle button.
+    // Reveal the new theme as a circle growing from the toggle button, or a short
+    // cross-fade (no movement) for users who prefer reduced motion.
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const { left, top, width, height } = event.currentTarget.getBoundingClientRect();
     const x = left + width / 2;
     const y = top + height / 2;
@@ -67,9 +68,14 @@ export function ThemeToggle() {
       await new Promise((resolve) => setTimeout(resolve, 0));
     });
     void transition.ready.then(() => {
+      const pseudoElement = "::view-transition-new(root)";
+      if (reduceMotion) {
+        root.animate({ opacity: [0, 1] }, { duration: 200, easing: "ease-out", pseudoElement });
+        return;
+      }
       root.animate(
         { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
-        { duration: 450, easing: "cubic-bezier(0.4, 0, 0.2, 1)", pseudoElement: "::view-transition-new(root)" },
+        { duration: 450, easing: "cubic-bezier(0.4, 0, 0.2, 1)", pseudoElement },
       );
     });
     void transition.finished.finally(() => root.classList.remove("theme-switching"));
