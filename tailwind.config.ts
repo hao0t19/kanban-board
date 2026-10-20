@@ -63,6 +63,14 @@ const config: Config = {
       rotate: {
         drag: "2.5deg",
       },
+      keyframes: {
+        "fade-in": { from: { opacity: "0" }, to: { opacity: "1" } },
+      },
+      animation: {
+        "fade-in": "fade-in 150ms ease-out both",
+        // Skeletons stay invisible for fast loads and only fade in when loading is slow.
+        "fade-in-delayed": "fade-in 200ms ease-out 250ms both",
+      },
     },
   },
   plugins: [],

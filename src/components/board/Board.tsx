@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from "react";
+import { useCallback, useLayoutEffect, useMemo, useState, useSyncExternalStore } from "react";
 import {
   closestCorners,
   DndContext,
@@ -25,6 +25,7 @@ import { useBoardStore } from "@/store/useBoardStore";
 import { useUiStore } from "@/store/useUiStore";
 import type { Card } from "@/types/board";
 import { AddColumn } from "./AddColumn";
+import { BoardSkeleton } from "./BoardSkeleton";
 import { CardOverlay } from "./Card";
 import { CardModal } from "./CardModal";
 import { Column } from "./Column";
@@ -51,7 +52,8 @@ const subscribeHydration = (onChange: () => void) =>
 const hasHydrated = () => useBoardStore.persist?.hasHydrated() ?? false;
 
 const useHydrated = () => {
-  useEffect(() => {
+  // Layout effect: localStorage is read and the board rendered before the first client paint.
+  useLayoutEffect(() => {
     void useBoardStore.persist?.rehydrate();
   }, []);
   return useSyncExternalStore(subscribeHydration, hasHydrated, () => false);
@@ -199,13 +201,7 @@ export function Board() {
   };
 
   if (!hydrated) {
-    return (
-      <div className="flex gap-column-gap px-4 py-6 md:px-8" aria-hidden>
-        {[0, 1, 2].map((i) => (
-          <div key={i} className="h-64 w-[calc(100vw-2rem)] max-w-column shrink-0 animate-pulse rounded-column bg-column sm:w-column" />
-        ))}
-      </div>
-    );
+    return <BoardSkeleton />;
   }
 
   const activeCard = drag ? cards[drag.activeId] : undefined;
@@ -232,7 +228,7 @@ export function Board() {
             },
           }}
         >
-          <div className="flex flex-1 snap-x snap-mandatory items-start gap-column-gap overflow-x-auto px-4 py-6 sm:snap-none md:px-8">
+          <div className="flex flex-1 snap-x snap-mandatory items-start gap-column-gap overflow-x-auto px-4 py-6 motion-safe:animate-fade-in sm:snap-none md:px-8">
             {columnOrder.map((columnId) => (
               <Column
                 key={columnId}
