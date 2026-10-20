@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useMemo, useState } from "react";
 import { Button, IconButton } from "@/components/ui/Button";
+import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import { priorityLabel } from "@/components/ui/Chip";
 import { CloseIcon, MenuIcon } from "@/components/ui/Icons";
 import logoMark from "../../../logo/logo-mark.svg";
@@ -20,12 +21,14 @@ const selectClass =
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [confirmingClear, setConfirmingClear] = useState(false);
   const cards = useBoardStore((s) => s.cards);
   const canUndo = useBoardStore((s) => s.past.length > 0);
   const canRedo = useBoardStore((s) => s.future.length > 0);
   const undo = useBoardStore((s) => s.undo);
   const redo = useBoardStore((s) => s.redo);
-  const loadSampleData = useBoardStore((s) => s.loadSampleData);
+  const reset = useBoardStore((s) => s.reset);
+  const isEmpty = useBoardStore((s) => s.columnOrder.length === 0);
 
   const priority = useUiStore((s) => s.priority);
   const tag = useUiStore((s) => s.tag);
@@ -38,9 +41,9 @@ export function Header() {
     [cards],
   );
 
-  const onLoadSample = () => {
-    loadSampleData();
-    showToast({ message: "Sample data loaded", onAction: undo });
+  const onClear = () => {
+    reset();
+    showToast({ message: "Board cleared", onAction: undo });
   };
 
   return (
@@ -89,7 +92,7 @@ export function Header() {
           </label>
           <label>
             <span className="sr-only">Filter by tag</span>
-            <select value={tag} onChange={(event) => setTag(event.target.value)} className={selectClass}>
+            <select value={tags.includes(tag) ? tag : "all"} onChange={(event) => setTag(event.target.value)} className={selectClass}>
               <option value="all">Tag: All</option>
               {tags.map((t) => (
                 <option key={t} value={t}>
@@ -106,8 +109,8 @@ export function Header() {
             <Button onClick={redo} disabled={!canRedo} aria-keyshortcuts="Control+Shift+Z">
               Redo
             </Button>
-            <Button variant="primary" onClick={onLoadSample}>
-              Load sample data
+            <Button onClick={() => setConfirmingClear(true)} disabled={isEmpty}>
+              Clear board
             </Button>
           </div>
           <div className="hidden md:block">
@@ -115,6 +118,15 @@ export function Header() {
           </div>
         </div>
       </div>
+      {confirmingClear && (
+        <ConfirmDialog
+          title="Clear board?"
+          message="This removes all columns and cards. You can undo right after, but not after reloading the page."
+          confirmLabel="Clear board"
+          onConfirm={onClear}
+          onClose={() => setConfirmingClear(false)}
+        />
+      )}
     </header>
   );
 }
