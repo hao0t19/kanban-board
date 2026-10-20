@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Design tokens from design.md, as RGB channels for Tailwind alpha support. */
+/* Design tokens as RGB channels so Tailwind can apply alpha. */
 @layer base {
   :root {
     color-scheme: light;
