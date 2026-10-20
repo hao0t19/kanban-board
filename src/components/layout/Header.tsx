@@ -48,15 +48,15 @@ export function Header() {
 
   return (
     <header className="sticky left-0 top-0 z-20 border-b border-line bg-surface">
-      <div className="flex flex-wrap items-center gap-3 px-4 py-3 md:px-8 md:py-4">
-        <div className="mr-1 flex items-center gap-2.5">
+      <div className="flex flex-wrap items-center gap-3 px-4 py-3 md:px-8 md:py-4 lg:flex-nowrap">
+        <div className="mr-1 flex shrink-0 items-center gap-2.5">
           <Image src={logoMark} alt="" width={28} height={28} priority className="rounded-md dark:ring-1 dark:ring-line" />
           <h1 className="text-xl font-semibold tracking-tight">Kanban</h1>
         </div>
 
-        <SearchBar className="order-last w-full md:order-none md:w-[282px]" />
+        <SearchBar className="order-last w-full lg:order-none lg:w-[282px] lg:min-w-40" />
 
-        <div className="ml-auto flex items-center gap-2 md:hidden">
+        <div className="ml-auto flex items-center gap-2 lg:hidden">
           <IconButton
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
@@ -71,7 +71,7 @@ export function Header() {
         <div
           id="header-controls"
           className={cn(
-            "order-last w-full flex-wrap items-center gap-3 md:order-none md:flex md:w-auto md:flex-1",
+            "order-last w-full flex-wrap items-center gap-3 lg:order-none lg:flex lg:w-auto lg:flex-1 lg:flex-nowrap lg:gap-2 xl:gap-3",
             menuOpen ? "flex" : "hidden",
           )}
         >
@@ -102,7 +102,7 @@ export function Header() {
             </select>
           </label>
 
-          <div className="flex items-center gap-3 md:ml-auto">
+          <div className="flex items-center gap-3 lg:ml-auto lg:gap-2 xl:gap-3">
             <Button onClick={undo} disabled={!canUndo} aria-keyshortcuts="Control+Z">
               Undo
             </Button>
@@ -113,7 +113,7 @@ export function Header() {
               Clear board
             </Button>
           </div>
-          <div className="hidden md:block">
+          <div className="hidden lg:block">
             <ThemeToggle />
           </div>
         </div>
